@@ -312,11 +312,35 @@
     return '<div class="engagement"><h1>' + scope.title + '</h1>' + renderFrameworkPill(scope) + body + '</div>';
   }
 
+  var LABEL_MAP = {
+    'accelerator plan': 'compliance_accelerator',
+    'achievement plan': 'achievement_plan',
+    'assurance plan': 'assurance_plan',
+    'vapt': 'pentest',
+    'internal audit': 'internal_audit',
+    'certification': 'iso_certification',
+    'custom framework': 'custom_framework',
+    'soc 2 report': 'soc2_certification',
+    'surveillance audit': 'surveillance_audit',
+    'grc platform': 'grc_platform',
+    'cmmi': 'cmmi',
+    'asv scan': 'asv_scan',
+    'pci dss': 'pci_dss',
+    'gdpr': 'gdpr'
+  };
+
+  function resolveKey(s) {
+    s = s.trim();
+    if (ALL_SCOPES[s]) return s;
+    return LABEL_MAP[s.toLowerCase()] || null;
+  }
+
   var selectedKeys;
   if (scopeParam === 'all') {
     selectedKeys = Object.keys(ALL_SCOPES);
   } else {
-    selectedKeys = scopeParam.split(',').map(function(s) { return s.trim(); }).filter(function(k) { return ALL_SCOPES[k]; });
+    var sep = scopeParam.indexOf(';') !== -1 ? ';' : ',';
+    selectedKeys = scopeParam.split(sep).map(resolveKey).filter(function(k) { return k; });
   }
 
   document.getElementById('root').innerHTML = selectedKeys.map(function(k) { return renderScope(ALL_SCOPES[k]); }).join('');
