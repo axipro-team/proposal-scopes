@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Axipro Scope of Work</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #fff;
+      color: #1a1a1a;
+      padding: 28px 20px;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+    .engagement { margin-bottom: 56px; }
+    h1 {
+      font-size: 28px;
+      font-weight: 700;
+      color: #111827;
+      margin-bottom: 10px;
+      line-height: 1.25;
+    }
+    .frameworks {
+      font-size: 14px;
+      color: #374151;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .pill {
+      background: #dde4f5;
+      color: #3730a3;
+      border-radius: 20px;
+      padding: 2px 12px;
+      font-size: 13px;
+      font-weight: 500;
+    }
+    .section { margin-bottom: 20px; }
+    h2 {
+      font-size: 15px;
+      font-weight: 700;
+      color: #111827;
+      margin-bottom: 10px;
+      margin-top: 18px;
+    }
+    ul { list-style: none; padding: 0; }
+    li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 7px;
+      color: #000 !important;
+      font-size: 15px;
+    }
+    li::before {
+      content: '\2022';
+      color: #6366f1 !important;
+      flex-shrink: 0;
+      line-height: 1.55;
+    }
+    .sub-list { margin-top: 6px; margin-left: 4px; }
+    .sub-list li::before { content: '\25E6'; color: #6366f1 !important; }
+    li.has-sub { align-items: flex-start; }
+    li.has-sub > .item-body { display: flex; flex-direction: column; }
+    .bold-list li { display: block; margin-bottom: 12px; }
+    .bold-list li::before { display: none; }
+    .bold-list li { padding-left: 20px; position: relative; }
+    .bold-list li::after {
+      content: '\2022';
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: #6366f1;
+    }
+    .intro-para { color: #374151; margin-bottom: 14px; font-size: 15px; }
+    .section-intro { color: #374151; margin-bottom: 10px; font-size: 15px; }
+    .phase-label { font-size: 14px; color: #374151; font-style: italic; margin-top: 14px; margin-bottom: 8px; }
+  </style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+(function () {
+  var params = new URLSearchParams(window.location.search);
+  var framework = params.get('framework') || 'Framework';
+  var scopeParam = params.get('scopes') || 'all';
+
+  var ALL_SCOPES = {
+    compliance_accelerator: {
+      title: 'Compliance Accelerator Plan Scope of Work',
+      hasFramework: true,
+      type: 'sections',
+      sections: [
+        { heading: 'Kick off meeting', items: ['Setting up communication channel','Compliance framework implementation plan','Identifying key stakeholders','Key terminologies','Setting up timeline','Notion access'] },
+        { heading: 'Gap analysis', items: ['Review of existing policies and procedures','Gap assessment','Review of organizational structure & scope'] },
+        { heading: 'Policy creation', items: ['Development of management system documentation: Includes policies, procedures, forms, and checklists as per the company scope','Facilitation during review and approval process'] },
+        { heading: 'System description', items: ['Creating system description for the chosen framework(s)'] }
+      ]
+    },
+    achievement_plan: {
+      title: 'Achievement Plan Scope of Work',
+      hasFramework: true,
+      type: 'sections',
+      sections: [
+        { heading: 'Kick off meeting', items: ['Setting up communication channel','Compliance framework implementation plan','Identifying key stakeholders','Key terminologies','Setting up timeline','Notion access'] },
+        { heading: 'Gap analysis', items: ['Review of existing policies and procedures','Gap assessment','Review of organizational structure & scope'] },
+        { heading: 'Compliance Implementation', items: ['Developing of Management System Documentation: Level 1 to Level 4, It includes policies, procedures, forms, checklists as per the company scope',"To evaluate the client's location, site-specific conditions and to undertake discussions with the client's personnel to determine the preparedness for the understanding of framework standards & company's policies & procedures",'Awareness Training to Core Group and identified staff on company procedures and ISO framework','Statement of Applicability (ISMS)','Define KPIs','1:1 Security Awareness Training','Compliance Calendar','Risk Treatment Plan','Implement Risk Remediation','Control Implementation','Control Operations','Vulnerability Scanning (~1000 USD)'] },
+        { heading: 'Audit Readiness', items: ['Implement Corrective Actions','Monitor and evaluate performance of Annex A Controls','Complete Risk Remediation Actions','Management Review Meeting','Audit Preparation / Internal Audit'] }
+      ]
+    },
+    assurance_plan: {
+      title: 'Assurance Plan Scope of Work',
+      hasFramework: true,
+      type: 'bold_items',
+      items: [
+        { term: 'Dedicated vCISO', desc: 'A dedicated virtual Chief Information Security Officer provides expert executive-level security guidance and strategic oversight without the cost of a full-time hire.' },
+        { term: 'Continuous Compliance Monitoring', desc: 'This ensures your systems and processes remain compliant with security standards, identifying any drift or non-conformity before it becomes a problem.' },
+        { term: 'Regulatory Updates and Standards Changes', desc: 'We keep you informed about new regulations and changes to ISO standards, ensuring your compliance framework is always current and up-to-date.' },
+        { term: 'Annual Surveillance Audit Preparation', desc: 'We prepare your team and documentation for annual audits, making sure you are ready to demonstrate ongoing compliance and a mature security posture.' }
+      ]
+    },
+    internal_audit: {
+      title: 'Internal Audit Scope of Work',
+      hasFramework: true,
+      type: 'sections',
+      sections: [
+        { heading: 'Internal audit', items: ['Conduct internal audit to verify compliance with framework requirements','Review of management system implementation','Assessment of effectiveness of controls and procedures','Identification of non-conformities and areas for improvement','Provision of detailed audit report with findings and recommendations'] },
+        { heading: 'Process Flow', items: ['Audit planning','Audit agenda','Audit checklist','Internal audit walkthrough: evidence review, interview sessions, Q&A','Audit Reporting','Non-Conformance & proposed Corrective Actions','Follow up audit as required','Audit close'] }
+      ]
+    },
+    custom_framework: {
+      title: 'Custom Framework Scope of Work',
+      hasFramework: true,
+      type: 'sections',
+      sections: [
+        { heading: 'Intro', items: ['Design and define unique controls and requirements tailored to specific industry needs, internal policies, or niche regulations not covered by standard frameworks.',"Facilitate the seamless integration and mapping of these custom requirements and controls into Drata's continuous monitoring engine.","Optimize Drata's features to ensure that automated evidence collection and testing effectively support the unique demands of the custom framework"] },
+        { heading: 'Scope', items: ['Kick off meeting to gather requirements','Creation of new framework as per standard guidelines','Adding of standard code descriptions','Mapping of existing DCF controls','Creation of new controls as needed','Providing updates in closing meeting'] }
+      ]
+    },
+    pentest: {
+      title: 'Pentest Scope of Work',
+      hasFramework: false,
+      type: 'intro_sections',
+      intro: ['Axipro will perform a penetration test on the in-scope applications, combining authenticated and unauthenticated testing to evaluate the effectiveness of security controls, access mechanisms, and business logic enforcement.','The assessment will be aligned with industry best practices, including the OWASP Top 10, and will include both automated and manual testing techniques.','The engagement will be conducted across the following phases:'],
+      sections: [
+        { heading: '1. Project Initiation & Scope Finalization', items: ['Kick-off meeting and stakeholder alignment','Confirmation of testing scope, targets, and access levels','Definition of rules of engagement and testing boundaries','Provision and validation of test credentials (for greybox access)'] },
+        { heading: '2. Reconnaissance & Information Gathering', items: ['Identification of application structure, endpoints, and technologies','Enumeration of accessible components and attack surface','Analysis of publicly available information and application responses'] },
+        { heading: '3. Vulnerability Assessment & Threat Analysis', items: ['Identification of potential vulnerabilities across the application','Review of configuration weaknesses and security misconfigurations','Assessment of authentication, session management, and access controls'] },
+        { heading: '4. Exploitation & Security Testing', intro: 'Manual and automated testing will be conducted to validate identified vulnerabilities, including but not limited to:', items: ['Authentication and authorization flaws','Session management weaknesses','Input validation vulnerabilities (e.g., XSS, SQL Injection)','Business logic vulnerabilities','API and data handling issues','Misconfigurations and insecure components'] },
+        { heading: '5. Post-Exploitation Analysis', items: ['Assessment of the potential impact of successful exploits','Identification of sensitive data exposure risks','Evaluation of privilege escalation and lateral movement possibilities'] },
+        { heading: '6. Reporting & Remediation Support', items: ['Delivery of a detailed technical report outlining findings, risk ratings, and remediation recommendations','Executive summary highlighting key risks and business impact','Walkthrough session to explain findings and recommended actions','Optional retesting support upon remediation (if required)'] }
+      ]
+    },
+    iso_certification: {
+      title: 'ISO Certification Scope of Work',
+      hasFramework: false,
+      type: 'sections',
+      sections: [
+        { heading: 'ISO Initial Certification (Stage 1 and Stage 2):', items: ['Client deems themselves prepared to advance to the stage one audit and completes application process','Executing application for certification','Auditor performs stage one audit','The client has three months to complete remaining corrective action','Auditor validates corrective action','Auditor performs stage two audit','The client has three months to complete remaining corrective action','Auditor validates corrective action','Auditor issues ISO/IEC certificate'] },
+        { heading: 'Surveillance One:', items: ['Auditor performs the surveillance one audit','Client maintains the IMS clauses','Client completes corrective action','Auditor validates corrective action','Auditor continues ISO/IEC certificate'] },
+        { heading: 'Surveillance Two:', items: ['Auditor performs the surveillance one audit','Client maintains the IMS clauses','Client completes corrective action','Auditor validates corrective action','Auditor continues ISO/IEC certificate'] }
+      ]
+    },
+    soc2_certification: {
+      title: 'SOC 2 Certification Scope of Work',
+      hasFramework: false,
+      type: 'sections',
+      sections: [
+        { heading: 'Kick Off Meeting', items: ['Setting Up Communication Channel','SOC 2 Audit Plan','Key Stake Holders','Key Terminologies','Setting up timeline'] },
+        { heading: 'SOC 2 Type 2 Certification', items: ['Scoping: Defining the system, services, and Trust Services Criteria (TSC) relevant to the audit (Security, Availability, Processing Integrity, Confidentiality, Privacy)','Preparation: The organization prepares by documenting controls, policies, and procedures related to the chosen TSCs','Type I Audit (Optional but common first step): Auditor assesses the design of controls at a specific point in time','Type II Audit: Auditor assesses the design and operating effectiveness of controls over a specified period (typically 3-12 months). This involves testing controls in action','Testing: The auditor gathers evidence through methods like interviews, observation, and reviewing documentation and system configurations','Reporting: The auditor issues a SOC 2 report outlining their opinion on the fairness of the presentation and the suitability of the design (Type I) and operating effectiveness (Type II) of controls'] }
+      ]
+    },
+    surveillance_audit: {
+      title: 'Surveillance Audit Scope of Work',
+      hasFramework: true,
+      type: 'sections',
+      sections: [
+        { heading: '1.1 Surveillance One:', items: ['Auditor performs the surveillance one audit','Client maintains the IMS clauses','Client completes corrective action','Auditor validates corrective action','Auditor continues ISO/IEC certificate'] },
+        { heading: '1.2 Surveillance Two:', items: ['Auditor performs the surveillance one audit','Client maintains the IMS clauses','Client completes corrective action','Auditor validates corrective action','Auditor continues ISO/IEC certificate'] }
+      ]
+    },
+    grc_platform: {
+      title: 'GRC Platform Subscription Scope of Work',
+      hasFramework: false,
+      type: 'bold_items',
+      items: [
+        { term: 'Fast Track', desc: 'to audit readiness with pre-built controls and policies mapped across multiple frameworks.' },
+        { term: 'Automation', desc: 'Integrations with your tech stack to automate compliance checks and evidence collection daily, reducing manual effort.' },
+        { term: 'Policy Templates & Guided Onboarding', desc: 'Included in our 30-day Compliance Accelerator Program.' },
+        { term: 'Streamlined Audit', desc: 'Auditors work directly in GRC Platform; evidence is packaged automatically' },
+        { term: 'Trust Center', desc: 'Shares verified trust data and automates security questionnaire responses' },
+        { term: 'Support', desc: 'Dedicated EMEA Customer Success team and Compliance Advisors included.' },
+        { term: 'Third Party Risk', desc: 'Provides real-time visibility into enterprise and vendor risk' },
+        { term: 'Multi Framework', desc: 'Mapping a single set of evidence to multiple standards (ISO 27001, SOC 2, HIPAA, etc.) to eliminate duplicate effort' },
+        { term: 'Training', desc: 'Automated tracking of required security awareness training and background check completion and more' }
+      ]
+    },
+    cmmi: {
+      title: 'CMMI Scope of Work',
+      hasFramework: false,
+      type: 'cmmi',
+      executiveSummary: 'Axipro will provide end-to-end consultancy and appraisal support to guide through the CMMI Level 3 (Defined) certification process. Our goal is to move your organization from "reactive" management to a "defined" state, where processes are characterized, understood, and described in standards, procedures, tools, and methods.',
+      phases: [
+        { label: 'Phase I: Gap Analysis & Process Discovery', items: ['Baseline Assessment: Review existing "as-is" processes against CMMI V3.0 Practice Areas (PAs).','Maturity Mapping: Identify gaps in the Foundational, Governing, and Core capability areas.','Implementation Roadmap: Define a structured timeline to reach "Defined" status.'] },
+        { label: 'Phase II: Process Definition & Standard Software Process (SSP)', items: ['Establishment of Standard Processes: Help your team define organizational standards for project management, engineering, and support.','Process Tailoring Guidelines: Create a framework for how individual projects can "tailor" the standard process to meet specific client needs.','Tool Integration: Align your current tech stack (e.g., Notion, Jira, MS Loop) to support automated evidence collection.'] },
+        { label: 'Phase III: Implementation & Institutionalization', items: ['Pilot Projects: Deploy the new processes on 2-3 live projects to demonstrate stability.','Evidence Vault Creation: Organize artifacts (project plans, peer review logs, risk registers) into an "Appraisal-Ready" repository.','Staff Training: Conduct workshops for Project Managers and Engineers on CMMI compliance and process adherence.'] },
+        { label: 'Phase IV: Pre-Appraisal & Readiness', items: ['Internal Mock Appraisal: Conduct a "Benchmark-lite" audit to simulate the formal appraisal experience.','Remediation: Rapidly address any "Non-Conformities" (NCs) found during the mock audit.'] },
+        { label: 'Phase V: Formal Benchmark Appraisal', items: ['Appraisal Support: Axipro will coordinate with the Certified Lead Appraiser (CLA).','Interview Prep: Preparing the "Functional Area" and "Project" representatives for the appraisal interview process.','Submission: Final submission to the CMMI Institute (ISACA) for official rating.'] }
+      ],
+      deliverables: ['Organizational Standard Process (OSP) Library (in your preferred platform, e.g., Notion).','Tailoring Guide & Measurement Repository.','Gap Analysis & Mock Appraisal Reports.','CMMI V3.0 Level 3 Maturity Rating.'],
+      advantage: ["Audit-Ready Infrastructure: We don't just give you PDFs; we build a living Process Hub in your existing workspace.",'Global Compliance Expertise: Leveraging our experience in ISO and SOC 2 to ensure your CMMI processes don\'t conflict with your other certifications. The certification shall be issued through partner firm Univate.']
+    },
+    asv_scan: {
+      title: 'ASV Scan Scope of Work',
+      hasFramework: false,
+      type: 'sections',
+      sections: [
+        { heading: 'ASV scan Testing', items: ['Project Kick Off','Finalization of ASV Scan Scope','Initial Scanning','Assessment and Analysis','Exploitation','Reporting'] }
+      ]
+    },
+    pci_dss: {
+      title: 'PCI DSS Scope of Work',
+      hasFramework: false,
+      type: 'nested_sections',
+      sections: [
+        { heading: 'PCI DSS v4.0 Certification Scope', items: [
+          { text: 'Perform a full PCI DSS v4.0 assessment in alignment with the PCI Security Standards Council requirements, including scoping validation, stakeholder interviews, documentation review, and technical testing of all in-scope systems and environments handling cardholder data (CHD) and/or sensitive authentication data (SAD).' },
+          { text: 'Validate the defined Cardholder Data Environment (CDE), including segmentation controls, network architecture, and data flow diagrams to ensure accurate scoping and compliance boundaries.' },
+          { text: 'Conduct a detailed review and testing of PCI DSS control domains, including but not limited to:', subitems: ['Network security controls and firewall configurations','Secure system configuration and hardening standards','Access control and identity management','Vulnerability management and patching processes','Logging, monitoring, and incident response capabilities','Encryption of cardholder data in transit and at rest','Secure software development practices (if applicable)'] },
+          { text: 'Utilize a combination of on-site and remote assessment methods to validate the effective implementation and operational effectiveness of security controls.' },
+          { text: 'Perform evidence collection and sampling to confirm ongoing compliance across systems, processes, and personnel.' },
+          { text: 'Deliver a <strong>Draft Report on Compliance (RoC)</strong> for client review, followed by a finalized RoC incorporating feedback and remediation updates (if required).' },
+          { text: 'Issue the official <strong>Attestation of Compliance (AoC)</strong> upon successful completion of the assessment, confirming PCI DSS compliance status.' },
+          { text: 'Provide advisory support during remediation (if needed) to help address any identified gaps prior to final certification issuance.' }
+        ]}
+      ]
+    },
+    gdpr: {
+      title: 'GDPR Scope of Work',
+      hasFramework: false,
+      type: 'sections',
+      sections: [
+        { heading: 'Initial Assessment and Gap Analysis', items: ['Gap Analysis: Identify gaps between existing practices and GDPR requirements, focusing on areas such as data processing, data subject rights, consent management, and security measures.','Risk Assessment: Evaluate potential risks related to data processing activities, including cross-border data transfers and third-party data sharing.'] },
+        { heading: 'Data Mapping and Inventory', items: ['Data Inventory: Create a detailed inventory of all personal data processed by the organization, including data categories, sources, storage locations, and data flows.','Data Flow Mapping: Document how personal data moves within the organization and to external parties, identifying potential vulnerabilities.'] },
+        { heading: 'Legal Basis and Consent Management', items: ['Review and Documentation: Review and document the legal basis for all data processing activities, ensuring compliance with GDPR legal requirements.','Consent Review: Assess existing consent mechanisms and update them to meet GDPR standards, including clarity, opt-in procedures, and withdrawal mechanisms.','Privacy Notices: Assist in drafting or updating privacy notices to ensure they are transparent, comprehensive, and GDPR compliant.'] },
+        { heading: 'Data Subject Rights Management', items: ['Process Development: Develop and implement processes to handle data subject rights requests, including access, rectification, erasure, and data portability.','Training: Provide training to relevant staff on handling data subject requests efficiently and within GDPR timelines.'] },
+        { heading: 'Data Protection Impact Assessments (DPIA)', items: ['DPIA Framework: Establish a framework for conducting DPIAs for processing activities that present high risks to data subjects.','DPIA Execution: Assist in conducting DPIAs for specific high-risk activities and provide guidance on mitigating identified risks.'] },
+        { heading: 'Security Measures and Incident Management', items: ['Security Audit: Review existing data security measures and recommend improvements, including encryption, access controls, and pseudonymization techniques.','Incident Response Plan: Develop or update the incident response plan to ensure timely detection, reporting, and management of data breaches in compliance with GDPR.'] },
+        { heading: 'Documentation and Record Keeping', items: ['Policy Development: Develop or update GDPR-compliant policies and procedures, including data protection policies, data breach response procedures, and retention policies.','Record Maintenance: Assist in maintaining records of processing activities as required under Article 30 of the GDPR.'] },
+        { heading: 'Third-Party and Vendor Management', items: ['Vendor Assessment: Evaluate the GDPR compliance of third-party vendors and service providers, ensuring appropriate data protection agreements are in place.','Contractual Updates: Assist in updating contracts with third parties to include GDPR-compliant data protection clauses.'] },
+        { heading: 'Training and Awareness Programs', items: ['Training Programs: Design and deliver GDPR training programs tailored to different levels of staff within the organization, ensuring employees understand their roles in maintaining compliance.','Awareness Campaigns: Develop awareness materials and campaigns to keep GDPR compliance at the forefront of organizational culture.','Slack Support: Dedicated Slack channel to address and resolve compliance-related queries.'] },
+        { heading: 'Ongoing Compliance Monitoring', items: ['Audit Framework: Establish a framework for ongoing compliance monitoring and continuous improvement.'] }
+      ]
+    }
+  };
+
+  function renderFrameworkPill(scope) {
+    var fw = scope.frameworkOverride || framework;
+    if (!scope.hasFramework && !scope.frameworkOverride) return '';
+    return '<div class="frameworks">Framework(s): <span class="pill">' + fw + '</span></div>';
+  }
+
+  function renderStandardSections(scope) {
+    return scope.sections.map(function(sec) {
+      var intro = sec.intro ? '<p class="section-intro">' + sec.intro + '</p>' : '';
+      return '<div class="section"><h2>' + sec.heading + '</h2>' + intro + '<ul>' + sec.items.map(function(i) { return '<li>' + i + '</li>'; }).join('') + '</ul></div>';
+    }).join('');
+  }
+
+  function renderBoldItems(scope) {
+    return '<ul class="bold-list">' + scope.items.map(function(i) { return '<li><strong>' + i.term + '</strong>: ' + i.desc + '</li>'; }).join('') + '</ul>';
+  }
+
+  function renderIntroSections(scope) {
+    return scope.intro.map(function(p) { return '<p class="intro-para">' + p + '</p>'; }).join('') + renderStandardSections(scope);
+  }
+
+  function renderNestedSections(scope) {
+    return scope.sections.map(function(sec) {
+      return '<div class="section"><h2>' + sec.heading + '</h2><ul>' + sec.items.map(function(item) {
+        if (typeof item === 'string') return '<li>' + item + '</li>';
+        if (item.subitems) {
+          var sub = '<ul class="sub-list">' + item.subitems.map(function(s) { return '<li>' + s + '</li>'; }).join('') + '</ul>';
+          return '<li class="has-sub"><div class="item-body"><span>' + item.text + '</span>' + sub + '</div></li>';
+        }
+        return '<li>' + item.text + '</li>';
+      }).join('') + '</ul></div>';
+    }).join('');
+  }
+
+  function renderCMMI(scope) {
+    var summary = '<div class="section"><h2>Executive Summary</h2><p class="intro-para">' + scope.executiveSummary + '</p></div>';
+    var phases = '<div class="section"><h2>Phases of Engagement</h2>' + scope.phases.map(function(p) {
+      return '<p class="phase-label">' + p.label + '</p><ul>' + p.items.map(function(i) { return '<li>' + i + '</li>'; }).join('') + '</ul>';
+    }).join('') + '</div>';
+    var deliv = '<div class="section"><h2>Key Deliverables</h2><ul>' + scope.deliverables.map(function(d) { return '<li>' + d + '</li>'; }).join('') + '</ul></div>';
+    var adv = '<div class="section"><h2>Axipro Advantage</h2><ul>' + scope.advantage.map(function(a) { return '<li>' + a + '</li>'; }).join('') + '</ul></div>';
+    return summary + phases + deliv + adv;
+  }
+
+  function renderScope(scope) {
+    var body = '';
+    if (scope.type === 'sections') body = renderStandardSections(scope);
+    else if (scope.type === 'bold_items') body = renderBoldItems(scope);
+    else if (scope.type === 'intro_sections') body = renderIntroSections(scope);
+    else if (scope.type === 'nested_sections') body = renderNestedSections(scope);
+    else if (scope.type === 'cmmi') body = renderCMMI(scope);
+    return '<div class="engagement"><h1>' + scope.title + '</h1>' + renderFrameworkPill(scope) + body + '</div>';
+  }
+
+  var selectedKeys;
+  if (scopeParam === 'all') {
+    selectedKeys = Object.keys(ALL_SCOPES);
+  } else {
+    selectedKeys = scopeParam.split(',').map(function(s) { return s.trim(); }).filter(function(k) { return ALL_SCOPES[k]; });
+  }
+
+  document.getElementById('root').innerHTML = selectedKeys.map(function(k) { return renderScope(ALL_SCOPES[k]); }).join('');
+})();
+</script>
+</body>
+</html>
