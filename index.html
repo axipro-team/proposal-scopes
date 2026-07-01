@@ -177,6 +177,7 @@
     surveillance_audit: {
       title: 'Surveillance Audit Scope of Work',
       hasFramework: true,
+      isoOnly: true,
       type: 'sections',
       sections: [
         { heading: '1.1 Surveillance One:', items: ['Auditor performs the surveillance one audit','Client maintains the IMS clauses','Client completes corrective action','Auditor validates corrective action','Auditor continues ISO/IEC certificate'] },
@@ -259,8 +260,14 @@
   };
 
   function renderFrameworkPill(scope) {
-    var fw = scope.frameworkOverride || framework;
     if (!scope.hasFramework && !scope.frameworkOverride) return '';
+    var fw = scope.frameworkOverride || framework;
+    if (scope.isoOnly) {
+      var sep = fw.indexOf(';') !== -1 ? ';' : ',';
+      var isoFrameworks = fw.split(sep).map(function(f) { return f.trim(); }).filter(function(f) { return /^ISO/i.test(f); });
+      if (!isoFrameworks.length) return '';
+      fw = isoFrameworks.join('; ');
+    }
     return '<div class="frameworks">Framework(s): <span class="pill">' + fw + '</span></div>';
   }
 
