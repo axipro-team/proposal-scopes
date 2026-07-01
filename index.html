@@ -325,21 +325,32 @@
     'assurance plan': 'assurance_plan',
     'vapt': 'pentest',
     'internal audit': 'internal_audit',
-    'certification': 'iso_certification',
     'custom framework': 'custom_framework',
     'soc 2 report': 'soc2_certification',
     'surveillance audit': 'surveillance_audit',
     'grc platform': 'grc_platform',
+    'mssp': 'grc_platform',
     'cmmi': 'cmmi',
     'asv scan': 'asv_scan',
     'pci dss': 'pci_dss',
     'gdpr': 'gdpr'
   };
 
-  function resolveKey(s) {
+  var fwList = framework.split(framework.indexOf(';') !== -1 ? ';' : ',').map(function(f) { return f.trim(); });
+  var fwHasISO = fwList.some(function(f) { return /^ISO/i.test(f); });
+  var fwHasSOC2 = fwList.some(function(f) { return /soc\s*2/i.test(f); });
+
+  function resolveKeys(s) {
     s = s.trim();
-    if (ALL_SCOPES[s]) return s;
-    return LABEL_MAP[s.toLowerCase()] || null;
+    var lower = s.toLowerCase();
+    if (lower === 'certification') {
+      var keys = [];
+      if (fwHasISO) keys.push('iso_certification');
+      if (fwHasSOC2) keys.push('soc2_certification');
+      return keys.length ? keys : ['iso_certification'];
+    }
+    if (ALL_SCOPES[s]) return [s];
+    return [LABEL_MAP[lower] || null];
   }
 
   var selectedKeys;
@@ -347,7 +358,7 @@
     selectedKeys = Object.keys(ALL_SCOPES);
   } else {
     var sep = scopeParam.indexOf(';') !== -1 ? ';' : ',';
-    selectedKeys = scopeParam.split(sep).map(resolveKey).filter(function(k) { return k; });
+    selectedKeys = scopeParam.split(sep).reduce(function(acc, s) { return acc.concat(resolveKeys(s)); }, []).filter(function(k) { return k; });
   }
 
   var rendered = selectedKeys.map(function(k) { return renderScope(ALL_SCOPES[k]); }).join('');
