@@ -108,7 +108,7 @@
       sections: [
         { heading: 'Kick off meeting', items: ['Setting up communication channel','Compliance framework implementation plan','Identifying key stakeholders','Key terminologies','Setting up timeline','Notion access'] },
         { heading: 'Gap analysis', items: ['Review of existing policies and procedures','Gap assessment','Review of organizational structure & scope'] },
-        { heading: 'Compliance Implementation', items: ['Developing of Management System Documentation: Level 1 to Level 4, It includes policies, procedures, forms, checklists as per the company scope',"To evaluate the client's location, site-specific conditions and to undertake discussions with the client's personnel to determine the preparedness for the understanding of framework standards & company's policies & procedures",'Awareness Training to Core Group and identified staff on company procedures and ISO framework','Statement of Applicability (ISMS)','Define KPIs','1:1 Security Awareness Training','Compliance Calendar','Risk Treatment Plan','Implement Risk Remediation','Control Implementation','Control Operations','Vulnerability Scanning (~1000 USD)'] },
+        { heading: 'Compliance Implementation', items: ['Developing of Management System Documentation: Level 1 to Level 4, It includes policies, procedures, forms, checklists as per the company scope',"To evaluate the client's location, site-specific conditions and to undertake discussions with the client's personnel to determine the preparedness for the understanding of framework standards & company's policies & procedures",'Awareness Training to Core Group and identified staff on company procedures and {{framework}} framework','Statement of Applicability (ISMS)','Define KPIs','1:1 Security Awareness Training','Compliance Calendar','Risk Treatment Plan','Implement Risk Remediation','Control Implementation','Control Operations','Vulnerability Scanning (~1000 USD)'] },
         { heading: 'Audit Readiness', items: ['Implement Corrective Actions','Monitor and evaluate performance of Annex A Controls','Complete Risk Remediation Actions','Management Review Meeting','Audit Preparation / Internal Audit'] }
       ]
     },
@@ -119,7 +119,7 @@
       items: [
         { term: 'Dedicated vCISO', desc: 'A dedicated virtual Chief Information Security Officer provides expert executive-level security guidance and strategic oversight without the cost of a full-time hire.' },
         { term: 'Continuous Compliance Monitoring', desc: 'This ensures your systems and processes remain compliant with security standards, identifying any drift or non-conformity before it becomes a problem.' },
-        { term: 'Regulatory Updates and Standards Changes', desc: 'We keep you informed about new regulations and changes to ISO standards, ensuring your compliance framework is always current and up-to-date.' },
+        { term: 'Regulatory Updates and Standards Changes', desc: 'We keep you informed about new regulations and changes to {{framework}} standards, ensuring your compliance framework is always current and up-to-date.' },
         { term: 'Annual Surveillance Audit Preparation', desc: 'We prepare your team and documentation for annual audits, making sure you are ready to demonstrate ongoing compliance and a mature security posture.' }
       ]
     },
@@ -343,7 +343,8 @@
     selectedKeys = scopeParam.split(sep).map(resolveKey).filter(function(k) { return k; });
   }
 
-  document.getElementById('root').innerHTML = selectedKeys.map(function(k) { return renderScope(ALL_SCOPES[k]); }).join('');
+  var rendered = selectedKeys.map(function(k) { return renderScope(ALL_SCOPES[k]); }).join('');
+  document.getElementById('root').innerHTML = rendered.replace(/\{\{framework\}\}/g, framework);
 })();
 </script>
 </body>
