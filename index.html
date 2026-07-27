@@ -63,15 +63,18 @@
       font-size: 20px;
     }
     li::before {
-      content: '\25CF';
-      color: #8a30ff !important;
+      content: '';
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      min-width: 8px;
+      border-radius: 50%;
+      background-color: #8a30ff;
       flex-shrink: 0;
-      line-height: 1.5;
-      font-size: 0.55em;
-      margin-top: 0.55em;
+      margin-top: 0.42em;
     }
     .sub-list { margin-top: 6px; margin-left: 4px; }
-    .sub-list li::before { content: '\25CB'; color: #8a30ff !important; font-size: 0.55em; margin-top: 0.55em; }
+    .sub-list li::before { content: ''; display: inline-block; width: 6px; height: 6px; min-width: 6px; border-radius: 50%; background-color: transparent; border: 2px solid #8a30ff; margin-top: 0.48em; }
     li.has-sub { align-items: flex-start; }
     li.has-sub > .item-body { display: flex; flex-direction: column; }
     .bold-list li { display: block; margin-bottom: 1em; }
