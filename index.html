@@ -63,13 +63,15 @@
       font-size: 20px;
     }
     li::before {
-      content: '\2022';
+      content: '\25CF';
       color: #8a30ff !important;
       flex-shrink: 0;
       line-height: 1.5;
+      font-size: 0.55em;
+      margin-top: 0.55em;
     }
     .sub-list { margin-top: 6px; margin-left: 4px; }
-    .sub-list li::before { content: '\25E6'; color: #8a30ff !important; }
+    .sub-list li::before { content: '\25CB'; color: #8a30ff !important; font-size: 0.55em; margin-top: 0.55em; }
     li.has-sub { align-items: flex-start; }
     li.has-sub > .item-body { display: flex; flex-direction: column; }
     .bold-list li { display: block; margin-bottom: 1em; }
