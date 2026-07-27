@@ -63,31 +63,22 @@
       font-size: 20px;
     }
     li::before {
-      content: '\2022';
-      font-size: 14px;
-      color: #8a30ff;
+      content: '';
       flex-shrink: 0;
-      min-width: 26px;
-      display: inline-block;
-      text-align: center;
-      line-height: 1.5;
+      width: 8px;
+      height: 8px;
+      min-width: 8px;
+      border-radius: 50%;
+      background-color: #8a30ff;
+      margin-top: 11px;
+      margin-right: 18px;
     }
     .sub-list { margin-top: 6px; margin-left: 26px; }
-    .sub-list li::before { content: '\25E6'; font-size: 14px; color: #8a30ff; min-width: 18px; text-align: center; }
+    .sub-list li::before { content: ''; width: 6px; height: 6px; min-width: 6px; margin-right: 14px; border-radius: 50%; background-color: transparent; border: 2px solid #8a30ff; margin-top: 12px; }
     li.has-sub { align-items: flex-start; }
     li.has-sub > .item-body { display: flex; flex-direction: column; }
-    .bold-list li { display: block; margin-bottom: 1em; padding-left: 26px; position: relative; }
-    .bold-list li::before { display: none; }
-    .bold-list li::after {
-      content: '\2022';
-      position: absolute;
-      left: 0;
-      top: 0;
-      font-size: 14px;
-      color: #8a30ff;
-      width: 26px;
-      text-align: center;
-    }
+    .bold-list li { display: flex; align-items: flex-start; gap: 0; margin-bottom: 1em; }
+    .bold-list li::before { content: ''; flex-shrink: 0; width: 8px; height: 8px; min-width: 8px; border-radius: 50%; background-color: #8a30ff; margin-top: 11px; margin-right: 18px; }
     .intro-para { color: #374151; margin-bottom: 16px; font-size: 20px; }
     .section-intro { color: #374151; margin-bottom: 12px; font-size: 20px; }
     .phase-label { font-size: 17px; color: #374151; font-style: italic; margin-top: 16px; margin-bottom: 10px; }
