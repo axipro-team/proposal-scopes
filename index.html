@@ -282,7 +282,7 @@
   }
 
   function renderBoldItems(scope) {
-    return '<ul class="bold-list">' + scope.items.map(function(i) { return '<li><strong>' + i.term + '</strong>: ' + i.desc + '</li>'; }).join('') + '</ul>';
+    return '<ul class="bold-list">' + scope.items.map(function(i) { return '<li><span><strong>' + i.term + '</strong>: ' + i.desc + '</span></li>'; }).join('') + '</ul>';
   }
 
   function renderIntroSections(scope) {
@@ -297,7 +297,7 @@
           var sub = '<ul class="sub-list">' + item.subitems.map(function(s) { return '<li>' + s + '</li>'; }).join('') + '</ul>';
           return '<li class="has-sub"><div class="item-body"><span>' + item.text + '</span>' + sub + '</div></li>';
         }
-        return '<li>' + item.text + '</li>';
+        return '<li><span>' + item.text + '</span></li>';
       }).join('') + '</ul></div>';
     }).join('');
   }
