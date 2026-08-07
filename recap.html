@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meeting Recap — Axipro</title>
+  <style>
+    :root {
+      --charcoal: #1a1a1a;
+      --border: #e5e5e5;
+      --muted: #666666;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #fff;
+      color: var(--charcoal);
+      padding: 24px;
+      min-height: 100vh;
+    }
+
+    .state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 240px;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 15px;
+      text-align: center;
+    }
+
+    .state .icon { font-size: 30px; }
+
+    .meeting-header {
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 16px;
+      margin-bottom: 24px;
+    }
+
+    .meeting-subject {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .meeting-meta {
+      font-size: 13px;
+      color: var(--muted);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .recap-row { margin-bottom: 32px; }
+
+    .status-error {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 2px 8px;
+      border-radius: 4px;
+      background: #fee2e2;
+      color: #dc2626;
+      margin-bottom: 10px;
+    }
+
+    .recap-content { line-height: 1.65; font-size: 15px; }
+    .recap-content h1, .recap-content h2, .recap-content h3 {
+      margin: 1em 0 0.4em;
+      font-weight: 600;
+    }
+    .recap-content p { margin-bottom: 0.75em; }
+    .recap-content ul, .recap-content ol { padding-left: 1.4em; margin-bottom: 0.75em; }
+    .recap-content li { margin-bottom: 0.25em; }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <div class="state" id="loading">
+      <div class="icon">⏳</div>
+      <div>Loading recap…</div>
+    </div>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(location.search);
+    const meetingId = params.get('meetingId');
+    const app = document.getElementById('app');
+
+    function show(html) { app.innerHTML = html; }
+
+    function fmtDate(iso) {
+      if (!iso) return '';
+      try {
+        return new Date(iso).toLocaleString('en-GB', {
+          day: 'numeric', month: 'short', year: 'numeric',
+          hour: '2-digit', minute: '2-digit'
+        });
+      } catch (e) { return iso; }
+    }
+
+    if (!meetingId) {
+      show('<div class="state"><div class="icon">⚠️</div><div>No meeting ID in URL.<br><small>Append ?meetingId=&lt;thread_id&gt;</small></div></div>');
+    } else {
+      const endpoint = 'https://axipro-team.app.n8n.cloud/webhook/axipro-recap-view';
+      const url = endpoint + '?meetingId=' + encodeURIComponent(meetingId);
+      const auth = 'Basic ' + btoa('recap:' + meetingId);
+
+      fetch(url, { headers: { 'Authorization': auth } })
+        .then(function(r) {
+          if (!r.ok) throw new Error('HTTP ' + r.status);
+          return r.json();
+        })
+        .then(function(rows) {
+          if (!Array.isArray(rows) || rows.length === 0) {
+            show('<div class="state"><div class="icon">📋</div><div>No recap yet for this meeting.</div></div>');
+            return;
+          }
+
+          var first = rows[0];
+          var attendees = Array.isArray(first.attendees)
+            ? first.attendees.join(', ')
+            : (first.attendees || '');
+
+          var dateStr = first.occurred_start ? fmtDate(first.occurred_start) : '';
+          if (first.occurred_end) dateStr += ' – ' + fmtDate(first.occurred_end);
+
+          var header = '<div class="meeting-header">'
+            + '<div class="meeting-subject">' + (first.subject || 'Meeting Recap') + '</div>'
+            + '<div class="meeting-meta">'
+            + (dateStr ? '<span>🗓 ' + dateStr + '</span>' : '')
+            + (attendees ? '<span>👥 ' + attendees + '</span>' : '')
+            + '</div></div>';
+
+          var recaps = rows.map(function(row) {
+            return '<div class="recap-row">'
+              + (row.status === 'error' ? '<div class="status-error">Error</div>' : '')
+              + '<div class="recap-content">' + (row.html || '') + '</div>'
+              + '</div>';
+          }).join('');
+
+          show(header + recaps);
+        })
+        .catch(function(err) {
+          show('<div class="state"><div class="icon">❌</div><div>Could not load recap.<br><small>' + err.message + '</small></div></div>');
+        });
+    }
+  </script>
+</body>
+</html>
