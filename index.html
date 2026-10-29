@@ -90,6 +90,16 @@
 (function () {
   var params = new URLSearchParams(window.location.search);
   var framework = params.get('framework') || 'Framework';
+  // v=2+ selects the newer version of a scope block (key + '_v2') when one exists.
+  // URLs without v keep the original blocks, so proposals already sent never change.
+  var scopeVersion = parseInt(params.get('v') || '1', 10) || 1;
+  // HubSpot multi-select arrives as 'A;B;C'. Display it as 'A, B and C'.
+  function fmtList(str) {
+    var parts = String(str).split(String(str).indexOf(';') !== -1 ? ';' : ',').map(function(f) { return f.trim(); }).filter(function(f) { return f; });
+    if (parts.length <= 1) return parts.join('');
+    return parts.slice(0, -1).join(', ') + ' and ' + parts[parts.length - 1];
+  }
+  var frameworkDisplay = fmtList(framework) || framework;
   var scopeParam = params.get('scopes') || 'all';
 
   var ALL_SCOPES = {
@@ -124,6 +134,23 @@
         { term: 'Continuous Compliance Monitoring', desc: 'This ensures your systems and processes remain compliant with security standards, identifying any drift or non-conformity before it becomes a problem.' },
         { term: 'Regulatory Updates and Standards Changes', desc: 'We keep you informed about new regulations and changes to {{framework}} standards, ensuring your compliance framework is always current and up-to-date.' },
         { term: 'Annual Surveillance Audit Preparation', desc: 'We prepare your team and documentation for annual audits, making sure you are ready to demonstrate ongoing compliance and a mature security posture.' }
+      ]
+    },
+    assurance_plan_v2: {
+      title: 'Assurance Plan Scope of Work',
+      hasFramework: true,
+      type: 'bold_items',
+      items: [
+        { term: 'Dedicated vCISO', desc: 'A dedicated virtual Chief Information Security Officer provides expert, executive-level security guidance and strategic oversight without the cost of a full-time hire.' },
+        { term: 'Continuous Compliance Monitoring', desc: 'This ensures your systems and processes remain compliant with security standards, identifying any drift or non-conformity before it becomes a problem.' },
+        { term: 'Regulatory Updates and Standards Changes', desc: 'We keep you informed about new regulations and changes to {{framework}} standards, ensuring your compliance framework is always current and up-to-date.' },
+        { term: 'Annual Surveillance Audit Preparation', desc: 'We prepare your team and documentation for annual audits, making sure you are ready to demonstrate ongoing compliance and a mature security posture.' },
+        { term: 'Post-Incident Analysis and Remediation', desc: 'Following a security incident, we conduct a detailed review to understand the root cause and implement changes to prevent a similar event from happening again.' },
+        { term: 'Proactive Security Posture Reviews', desc: 'Our team regularly assesses your security landscape, identifying new risks and recommending preventative measures before they can be exploited.' },
+        { term: 'Policy and Documentation Maintenance', desc: 'We help you keep your security policies and procedures up-to-date, reflecting any organizational changes or new technologies to ensure continued relevance.' },
+        { term: 'GRC Platform Integration and Management', desc: 'We assist in setting up and managing a Governance, Risk, and Compliance platform to automate control tracking, evidence collection, and reporting.' },
+        { term: 'Security Awareness Campaign Development', desc: 'We help create and deploy engaging campaigns to educate employees on the latest cyber threats and best practices, making your team a strong line of defense.' },
+        { term: 'Post-Certification Metric Reporting', desc: 'We provide regular reports on key security metrics, helping you understand and communicate the value and effectiveness of your ongoing security investments.' }
       ]
     },
     internal_audit: {
@@ -272,6 +299,7 @@
       if (!isoFrameworks.length) return '';
       fw = isoFrameworks.join('; ');
     }
+    fw = fmtList(fw) || fw;
     return '<div class="frameworks">Framework(s): <span class="pill">' + fw + '</span></div>';
   }
 
@@ -359,14 +387,15 @@
 
   var selectedKeys;
   if (scopeParam === 'all') {
-    selectedKeys = Object.keys(ALL_SCOPES);
+    selectedKeys = Object.keys(ALL_SCOPES).filter(function(k) { return !/_v\d+$/.test(k); });
   } else {
     var sep = scopeParam.indexOf(';') !== -1 ? ';' : ',';
     selectedKeys = scopeParam.split(sep).reduce(function(acc, s) { return acc.concat(resolveKeys(s)); }, []).filter(function(k) { return k; });
   }
 
+  selectedKeys = selectedKeys.map(function(k) { return (scopeVersion >= 2 && ALL_SCOPES[k + '_v2']) ? k + '_v2' : k; });
   var rendered = selectedKeys.map(function(k) { return renderScope(ALL_SCOPES[k]); }).join('');
-  document.getElementById('root').innerHTML = rendered.replace(/\{\{framework\}\}/g, framework);
+  document.getElementById('root').innerHTML = rendered.replace(/\{\{framework\}\}/g, frameworkDisplay);
 })();
 </script>
 </body>
