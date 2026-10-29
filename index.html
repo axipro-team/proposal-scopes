@@ -90,9 +90,6 @@
 (function () {
   var params = new URLSearchParams(window.location.search);
   var framework = params.get('framework') || 'Framework';
-  // v=2+ selects the newer version of a scope block (key + '_v2') when one exists.
-  // URLs without v keep the original blocks, so proposals already sent never change.
-  var scopeVersion = parseInt(params.get('v') || '1', 10) || 1;
   // HubSpot multi-select arrives as 'A;B;C'. Display it as 'A, B and C'.
   function fmtList(str) {
     var parts = String(str).split(String(str).indexOf(';') !== -1 ? ';' : ',').map(function(f) { return f.trim(); }).filter(function(f) { return f; });
@@ -126,17 +123,6 @@
       ]
     },
     assurance_plan: {
-      title: 'Assurance Plan Scope of Work',
-      hasFramework: true,
-      type: 'bold_items',
-      items: [
-        { term: 'Dedicated vCISO', desc: 'A dedicated virtual Chief Information Security Officer provides expert executive-level security guidance and strategic oversight without the cost of a full-time hire.' },
-        { term: 'Continuous Compliance Monitoring', desc: 'This ensures your systems and processes remain compliant with security standards, identifying any drift or non-conformity before it becomes a problem.' },
-        { term: 'Regulatory Updates and Standards Changes', desc: 'We keep you informed about new regulations and changes to {{framework}} standards, ensuring your compliance framework is always current and up-to-date.' },
-        { term: 'Annual Surveillance Audit Preparation', desc: 'We prepare your team and documentation for annual audits, making sure you are ready to demonstrate ongoing compliance and a mature security posture.' }
-      ]
-    },
-    assurance_plan_v2: {
       title: 'Assurance Plan Scope of Work',
       hasFramework: true,
       type: 'bold_items',
@@ -387,13 +373,12 @@
 
   var selectedKeys;
   if (scopeParam === 'all') {
-    selectedKeys = Object.keys(ALL_SCOPES).filter(function(k) { return !/_v\d+$/.test(k); });
+    selectedKeys = Object.keys(ALL_SCOPES);
   } else {
     var sep = scopeParam.indexOf(';') !== -1 ? ';' : ',';
     selectedKeys = scopeParam.split(sep).reduce(function(acc, s) { return acc.concat(resolveKeys(s)); }, []).filter(function(k) { return k; });
   }
 
-  selectedKeys = selectedKeys.map(function(k) { return (scopeVersion >= 2 && ALL_SCOPES[k + '_v2']) ? k + '_v2' : k; });
   var rendered = selectedKeys.map(function(k) { return renderScope(ALL_SCOPES[k]); }).join('');
   document.getElementById('root').innerHTML = rendered.replace(/\{\{framework\}\}/g, frameworkDisplay);
 })();
